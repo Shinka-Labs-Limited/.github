@@ -39,7 +39,7 @@ jobs:
 
       # Typecheck
       - name: Typecheck
-        run: npm run typecheck
+        run: npm run typecheck --if-present
 
       # Build
       - name: Build
