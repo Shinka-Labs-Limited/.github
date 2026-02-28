@@ -1,0 +1,33 @@
+name: Reusable CI
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Reads Node version from .nvmrc
+      # Caches ~/.npm keyed on package-lock.json for fast installs.
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # Clean install from lockfile
+      - name: Install dependencies
+        run: npm ci
+
+      # Typecheck
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Build
+      - name: Build
+        run: npm run build
